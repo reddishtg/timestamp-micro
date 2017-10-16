@@ -38,6 +38,21 @@ app.route('/')
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
 
+app.route('/:data')
+    .get(function (req, res) {
+      var data = req.params.data;
+      data  = isNaN(data) ? data : +data;
+  
+    var date = new Date(data);
+  
+      var obj = {
+        unix: date.getTime(),
+        natural: date.getTime() ? date.toDateString() : null
+      }
+      res.end(JSON.stringify(obj));
+})
+  
+
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
   res.status(404);
